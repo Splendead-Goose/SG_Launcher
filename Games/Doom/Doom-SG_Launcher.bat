@@ -19,16 +19,25 @@ rem === Added Sanity Check ===
 rem ==========================
 
 rem ==========================
+rem === Update: 2023-05-22 ===
+rem === Added Chex Quest 3 ===
+rem ==========================
+
+rem ==========================
 rem === Set Some Variables ===
 rem ==========================
 
 :SetVariables
-set ver=1.2
+set ver=1.3
 set lname=Doom Launcher v%ver%
 
 set gzdoombin=gzdoom.exe
 set SaveDir=saves
 set iniFile=gzdoom.ini
+
+set CQGameName=CHEX3.WAD
+set CQSaves=%SaveDir%\Chex
+set CQWadHash=3D01573607B600BB1FDB1FBDBC81C23722706D09F685F4ED4FBB83EE46F53A69
 
 set D1GameName=DOOM.WAD
 set D1ModPath=d1_mods
@@ -43,6 +52,7 @@ set D2WadHash=10D67824B11025DDD9198E8CFC87CA335EE6E2D3E63AF4180FA9B8A471893255
 set ModList=modlist.txt
 set ModPath=modpath.txt
 
+call:CheckGameFiles "%CQGameName%" "%CQWadHash%"
 call:CheckGameFiles "%D1GameName%" "%D1WadHash%"
 call:CheckGameFiles "%D2GameName%" "%D2WadHash%"
 call:GetMods
@@ -78,6 +88,7 @@ for /L %%i in (1,1,%FCOUNT%) do (
 )
 echo.
 echo Available Games:
+echo 	C.  Chex Quest 3 (with 1 and 2)
 echo 	D1. Doom - Ultimate (v1.9ud)
 echo 	D2. Doom II (v1.9)
 echo.
@@ -88,6 +99,7 @@ echo.
 set /P NUMBER=Enter Number or Letter: 
 echo.
 if /i {%NUMBER%}=={0} (goto :0)
+if /i {%NUMBER%}=={C} (call:StartDoom "%CQGameName%" "%CQSaves%")
 if /i {%NUMBER%}=={D1} (call:StartDoom "%D1GameName%" "%D1Saves%")
 if /i {%NUMBER%}=={D2} (call:StartDoom "%D2GameName%" "%D2Saves%")
 if /i {%NUMBER%}=={A} (call:About)
@@ -161,7 +173,7 @@ echo.
 echo Portable Save Dir: %SaveDir%
 echo.
 echo Release: 2023-05-19
-echo Updated: 2023-05-20
+echo Updated: 2023-05-22
 echo Version: v%ver%
 echo.
 echo GZDoom Version: 4.10.0 x64
